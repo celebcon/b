@@ -83,7 +83,7 @@ var button = function(x,y,endx,endy,cost,scenes,name,f) {
 button.prototype.draw = function() {
 	ctx.strokeStyle = "red"; 
 	ctx.lineWidth = 5;
-    ctx.strokeRect(this.x, this.y - scrollY, this.w, this.h);
+    //ctx.strokeRect(this.x, this.y - scrollY, this.w, this.h);
 	
 	if (this.verifying == true){
 		this.verified = true;
@@ -162,6 +162,47 @@ buttonArray.push(new button(313, 1890,550,1920,3,1, "Lucy Hale",0.75));
 
 buttonArray.push(new button(560, 1890,800,1920,4,1, "Zazie Beetz",0.85));
 
+//.......................
+
+buttonArray.push(new button(70, 2290,310,2320,2,1, "Imogen Poots",0.90));
+
+buttonArray.push(new button(313, 2290,550,2320,5,1, "Natalie Dormer",0.50));
+
+buttonArray.push(new button(560, 2290,800,2320,3,1, "Hayley Atwell",0.60));
+
+//.......................
+
+buttonArray.push(new button(70, 2690,310,2720,2,1, "Thandie Newton",0.65));
+
+buttonArray.push(new button(313, 2690,550,2720,3,1, "Emmanuel Chirqui",0.50));
+
+buttonArray.push(new button(560, 2690,800,2720,4,1, "Minka Kelly",0.70));
+
+//.......................
+
+buttonArray.push(new button(70, 3090,310,3120,3,1, "Christina Ricci",0.60));
+
+buttonArray.push(new button(313, 3090,550,3120,4,1, "Emily Ratajkowski",0.85));
+
+buttonArray.push(new button(560, 3090,800,3120,4,1, "Paige Spiranac",0.90));
+
+//.......................
+
+buttonArray.push(new button(70, 3490,310,3520,2,1, "Elizabeth Debicki",0.90));
+
+buttonArray.push(new button(313, 3490,550,3520,3,1, "Michelle Trachtenberg",0.75));
+
+buttonArray.push(new button(560, 3490,800,3520,5,1, "Anna Kendrick",0.65));
+
+
+//.......................
+
+buttonArray.push(new button(70, 3890,310,3920,4,1, "Olivia Munn",0.70));
+
+buttonArray.push(new button(313, 3890,550,3920,3,1, "Amy Adams",0.55));
+
+buttonArray.push(new button(560, 3890,800,3920,4,1, "Olivia Wilde",0.75));
+
 
 function clickfunc(){
 
@@ -193,9 +234,9 @@ var scrollY = 0;
 var curplaceY = 0;
 var placeY = 0; 
 
-var debugInfo = 1; 
+var debugInfo = 0; 
 
-var maxScrollY = 1600; 
+var maxScrollY = 3200; 
 
 var realScrollY = 0;
 function move() {
@@ -211,6 +252,11 @@ ctx.drawImage(fert2, 0, 400 - scrollY,800,400);
 ctx.drawImage(fert3, 0, 800 - scrollY,800,400);
 ctx.drawImage(fert4, 0, 1200 - scrollY,800,400);
 ctx.drawImage(fert5, 0, 1600 - scrollY,800,400);
+ctx.drawImage(fert6, 0, 2000 - scrollY,800,400);
+ctx.drawImage(fert7, 0, 2400 - scrollY,800,400);
+ctx.drawImage(fert8, 0, 2800 - scrollY,800,400);
+ctx.drawImage(fert9, 0, 3200 - scrollY,800,400);
+ctx.drawImage(fert10, 0,3600 - scrollY,800,400);
 
 //Prototypes
 for(var i = 0; i < buttonArray.length ; i++) {
@@ -227,14 +273,18 @@ if (curplaceY > placeY){curplaceY = curplaceY - 10;}
 
 realScrollY = (placeY * maxScrollY)/320
 
+if (realScrollY >= 3200 && realScrollY < 3600){realScrollY = 3200;}
+if (realScrollY >= 2800 && realScrollY < 3200){realScrollY = 2800;}
+if (realScrollY >= 2400 && realScrollY < 2800){realScrollY = 2400;}
+if (realScrollY >= 2000 && realScrollY < 2400){realScrollY = 2000;}
 if (realScrollY >= 1600 && realScrollY < 2000){realScrollY = 1600;}
 if (realScrollY >= 1200 && realScrollY < 1600){realScrollY = 1200;}
 if (realScrollY >= 800 && realScrollY < 1200){realScrollY = 800;}
 if (realScrollY >= 400 && realScrollY < 800){realScrollY = 400;}
 if (realScrollY < 400){realScrollY = 0;}
 
-if (scrollY < realScrollY){scrollY = scrollY + 20;}
-if (scrollY > realScrollY){scrollY = scrollY - 20;}
+if (scrollY < realScrollY){scrollY = scrollY + (realScrollY - scrollY)/4;}
+if (scrollY > realScrollY){scrollY = scrollY - (scrollY - realScrollY)/4;}
 
 if (scrollY < realScrollY){scrollY = scrollY + 1;}
 if (scrollY > realScrollY){scrollY = scrollY - 1;}
@@ -277,6 +327,12 @@ for(var i = 0; i < buttonArray.length ; i++) {
 <img id="fert3"  style="display:none; visibility:hidden;" src="fert3.png" alt="">
 <img id="fert4"  style="display:none; visibility:hidden;" src="fert4.png" alt="">
 <img id="fert5"  style="display:none; visibility:hidden;" src="fert5.png" alt="">
+<img id="fert6"  style="display:none; visibility:hidden;" src="fert6.png" alt="">
+<img id="fert7"  style="display:none; visibility:hidden;" src="fert7.png" alt="">
+<img id="fert8"  style="display:none; visibility:hidden;" src="fert8.png" alt="">
+<img id="fert9"  style="display:none; visibility:hidden;" src="fert9.png" alt="">
+<img id="fert10"  style="display:none; visibility:hidden;" src="fert10.png" alt="">
+
 
 <img id="win"  style="display:none; visibility:hidden;" src="win.png" alt="">
 <img id="lose"  style="display:none; visibility:hidden;" src="lose.png" alt="">
