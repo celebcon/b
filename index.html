@@ -128,11 +128,39 @@ buttonArray.push(new button(313, 290,550,320,4,1, "Christina Hendricks",0.60));
 
 buttonArray.push(new button(560, 290,800,320,3,1, "Emily Osment",0.85));
 
+//.......................
+
 buttonArray.push(new button(70, 690,310,720,5,1, "Zendaya",0.90));
 
 buttonArray.push(new button(313, 690,550,720,4,1, "Florence Pugh",0.75));
 
 buttonArray.push(new button(560, 690,800,720,3,1, "Alison Brie",0.65));
+
+//.......................
+
+buttonArray.push(new button(70, 1090,310,1120,5,1, "Elizabeth Olsen",0.55));
+
+buttonArray.push(new button(313, 1090,550,1120,2,1, "Elisha Cuthbert",0.65));
+
+buttonArray.push(new button(560, 1090,800,1120,2,1, "Sarah Silverman",0.40));
+
+
+//.......................
+
+buttonArray.push(new button(70, 1490,310,1520,6,1, "Ana De Armas",0.80));
+
+buttonArray.push(new button(313, 1490,550,1520,4,1, "Melissa Benoist",0.70));
+
+buttonArray.push(new button(560, 1490,800,1520,2,1, "Rashida Jones",0.55));
+
+
+//.......................
+
+buttonArray.push(new button(70, 1890,310,1920,4,1, "Miranda Kerr",0.65));
+
+buttonArray.push(new button(313, 1890,550,1920,3,1, "Lucy Hale",0.75));
+
+buttonArray.push(new button(560, 1890,800,1920,4,1, "Zazie Beetz",0.85));
 
 
 function clickfunc(){
@@ -167,7 +195,7 @@ var placeY = 0;
 
 var debugInfo = 1; 
 
-var maxScrollY = 800; 
+var maxScrollY = 1600; 
 
 var realScrollY = 0;
 function move() {
@@ -181,6 +209,8 @@ ctx.fillRect(0,0, 800, 400);
 ctx.drawImage(fert, 0, 0 - scrollY,800,400);
 ctx.drawImage(fert2, 0, 400 - scrollY,800,400);
 ctx.drawImage(fert3, 0, 800 - scrollY,800,400);
+ctx.drawImage(fert4, 0, 1200 - scrollY,800,400);
+ctx.drawImage(fert5, 0, 1600 - scrollY,800,400);
 
 //Prototypes
 for(var i = 0; i < buttonArray.length ; i++) {
@@ -197,12 +227,14 @@ if (curplaceY > placeY){curplaceY = curplaceY - 10;}
 
 realScrollY = (placeY * maxScrollY)/320
 
-if (realScrollY >= 800){realScrollY = 800;}
+if (realScrollY >= 1600 && realScrollY < 2000){realScrollY = 1600;}
+if (realScrollY >= 1200 && realScrollY < 1600){realScrollY = 1200;}
+if (realScrollY >= 800 && realScrollY < 1200){realScrollY = 800;}
 if (realScrollY >= 400 && realScrollY < 800){realScrollY = 400;}
 if (realScrollY < 400){realScrollY = 0;}
 
-if (scrollY < realScrollY){scrollY = scrollY + 10;}
-if (scrollY > realScrollY){scrollY = scrollY - 10;}
+if (scrollY < realScrollY){scrollY = scrollY + 20;}
+if (scrollY > realScrollY){scrollY = scrollY - 20;}
 
 if (scrollY < realScrollY){scrollY = scrollY + 1;}
 if (scrollY > realScrollY){scrollY = scrollY - 1;}
@@ -243,6 +275,8 @@ for(var i = 0; i < buttonArray.length ; i++) {
 <img id="fert"  style="display:none; visibility:hidden;" src="fert.png" alt="">
 <img id="fert2"  style="display:none; visibility:hidden;" src="fert2.png" alt="">
 <img id="fert3"  style="display:none; visibility:hidden;" src="fert3.png" alt="">
+<img id="fert4"  style="display:none; visibility:hidden;" src="fert4.png" alt="">
+<img id="fert5"  style="display:none; visibility:hidden;" src="fert5.png" alt="">
 
 <img id="win"  style="display:none; visibility:hidden;" src="win.png" alt="">
 <img id="lose"  style="display:none; visibility:hidden;" src="lose.png" alt="">
