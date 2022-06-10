@@ -106,11 +106,11 @@ button.prototype.draw = function() {
   if (this.bought == true){
   
       if (this.breeded == true){
-	  ctx.drawImage(win, this.x + 3, this.y - 287 - scrollY,223,285);
+	  if (scene == 1){ctx.drawImage(win, this.x + 3, this.y - 287 - scrollY,223,285);}
 	  }
 	  
 	  if (this.breeded == false){
-	  ctx.drawImage(lose, this.x + 3, this.y - 287 - scrollY,223,285);
+	  if (scene == 1){ctx.drawImage(lose, this.x + 3, this.y - 287 - scrollY,223,285);}
 	  }
   
   }
@@ -222,23 +222,40 @@ function clickfunc(){
 	}
 	
 
+if (scene == -7){
+	if (canvasY > 200 && canvasX > 220 && canvasX < 600){scene = 1;}
+}
+
+if (scene == -8){
+	if (canvasY > 320 && canvasX > 220 && canvasX < 600){scene = -7;}
+}
+
+if (scene == -9){
+	if (canvasY > 320 && canvasX > 220 && canvasX < 600){scene = -8;}
+}
+
+if (scene == -10){
+	if (canvasY > 320 && canvasX > 220 && canvasX < 600){scene = -9;}
+}
+
 }//END OF CLICKFUNC
 var myVar = setInterval(move, 20);
 
-var scene = 1; 
+var scene = -10; 
 
-var points = 50; 
+var points = 20; 
 
 var scrollY = 0; 
 
 var curplaceY = 0;
 var placeY = 0; 
 
-var debugInfo = 0; 
+var debugInfo = 1; 
 
 var maxScrollY = 3200; 
 
 var realScrollY = 0;
+
 function move() {
 
 //backtrack.play();
@@ -247,6 +264,15 @@ function move() {
 ctx.fillStyle = "black";
 ctx.fillRect(0,0, 800, 400);
 
+
+if (scene == -10){ctx.drawImage(intro, 0, 0,800,400);}
+if (scene == -9){ctx.drawImage(greatnews, 0, 0,800,400);}
+if (scene == -8){ctx.drawImage(request, 0, 0,800,400);}
+if (scene == -7){ctx.drawImage(fertility, 0, 0,800,400);}
+if (scene == 1 && points < 2){scene = 2;}
+if (scene == 2){ctx.drawImage(maids, 0, 0,800,400);}
+
+if (scene == 1){
 ctx.drawImage(fert, 0, 0 - scrollY,800,400);
 ctx.drawImage(fert2, 0, 400 - scrollY,800,400);
 ctx.drawImage(fert3, 0, 800 - scrollY,800,400);
@@ -257,6 +283,7 @@ ctx.drawImage(fert7, 0, 2400 - scrollY,800,400);
 ctx.drawImage(fert8, 0, 2800 - scrollY,800,400);
 ctx.drawImage(fert9, 0, 3200 - scrollY,800,400);
 ctx.drawImage(fert10, 0,3600 - scrollY,800,400);
+}
 
 //Prototypes
 for(var i = 0; i < buttonArray.length ; i++) {
@@ -265,6 +292,8 @@ for(var i = 0; i < buttonArray.length ; i++) {
 
 
 //UI
+
+if (scene == 1){
 ctx.drawImage(scrollbar, 0, 0,800,400);
 ctx.drawImage(scrollbarGREEN, 10, curplaceY,39,40);
 
@@ -295,12 +324,13 @@ ctx.fillRect(295,0, 150, 30);
 ctx.font = "30px Arial";
 ctx.fillStyle = "white";
 ctx.fillText("Points: " + points,300,25);
+}
 
 
 
 if (debugInfo == 1){
 ctx.font = "20px Arial";
-ctx.fillStyle = "black";
+ctx.fillStyle = "white";
 ctx.fillText("X: " + canvasX,3,20);
 ctx.fillText("Y: " + canvasY,3,40);
 ctx.fillText("Points: " + points,3,60);
@@ -321,6 +351,16 @@ for(var i = 0; i < buttonArray.length ; i++) {
 </script>
 
 <input class = "defaultText" type="text" size="80" id="demo" value="">
+
+<img id="intro"  style="display:none; visibility:hidden;" src="intro.png" alt="">
+
+<img id="greatnews"  style="display:none; visibility:hidden;" src="greatnews.png" alt="">
+
+<img id="request"  style="display:none; visibility:hidden;" src="request.png" alt="">
+
+<img id="fertility"  style="display:none; visibility:hidden;" src="fertility.png" alt="">
+
+<img id="maids"  style="display:none; visibility:hidden;" src="maids.png" alt="">
 
 <img id="fert"  style="display:none; visibility:hidden;" src="fert.png" alt="">
 <img id="fert2"  style="display:none; visibility:hidden;" src="fert2.png" alt="">
