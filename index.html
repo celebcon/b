@@ -1,5 +1,20 @@
 <html>
+<style>
+.defaultText{
+    margin-top: 50px;
+    padding: 0;
+    height: 100px;
+    position: relative;
+    left: 0;
+    outline: none;
+    border: 1px solid #cdcdcd;
+    border-color: rgba(0,0,0,.15);
+    background-color: white;
+    font-size: 16px;
+	      white-space: pre-wrap;
+}
 
+</style>
 <body style="background-color:lightblue;">
 
 <canvas id="myCanvas" onload = 'move()' onclick = "clickfunc()" width="800" height="400" style=" padding-left: 0;
@@ -68,7 +83,7 @@ var button = function(x,y,endx,endy,cost,scenes,name,f) {
 button.prototype.draw = function() {
 	ctx.strokeStyle = "red"; 
 	ctx.lineWidth = 5;
-    ctx.strokeRect(this.x, this.y, this.w, this.h);
+    ctx.strokeRect(this.x, this.y - scrollY, this.w, this.h);
 	
 	if (this.verifying == true){
 		this.verified = true;
@@ -85,17 +100,17 @@ button.prototype.draw = function() {
 	this.verified = false; 
 	this.rand = Math.random();
 	if (this.rand < this.f){this.breeded = true;}
-	if (this.rand >= this.f){this.breeded = false;}
+	if (this.rand > this.f){this.breeded = false;}
 	}
 	
   if (this.bought == true){
   
       if (this.breeded == true){
-	  ctx.drawImage(win, this.x + 3, this.y - 287,223,285);
+	  ctx.drawImage(win, this.x + 3, this.y - 287 - scrollY,223,285);
 	  }
 	  
 	  if (this.breeded == false){
-	  ctx.drawImage(lose, this.x + 3, this.y - 287,223,285);
+	  ctx.drawImage(lose, this.x + 3, this.y - 287 - scrollY,223,285);
 	  }
   
   }
@@ -113,24 +128,47 @@ buttonArray.push(new button(313, 290,550,320,4,1, "Christina Hendricks",0.60));
 
 buttonArray.push(new button(560, 290,800,320,3,1, "Emily Osment",0.85));
 
+buttonArray.push(new button(70, 690,310,720,5,1, "Zendaya",0.90));
+
+buttonArray.push(new button(313, 690,550,720,4,1, "Florence Pugh",0.75));
+
+buttonArray.push(new button(560, 690,800,720,3,1, "Alison Brie",0.65));
+
 
 function clickfunc(){
 
 	for(var i = 0; i < buttonArray.length ; i++) {
 			if (canvasX > buttonArray[i].x && canvasX < buttonArray[i].x + buttonArray[i].w){
-				if (canvasY > buttonArray[i].y && canvasY < buttonArray[i].y + buttonArray[i].h){
+				if (canvasY > buttonArray[i].y - scrollY && canvasY < buttonArray[i].y + buttonArray[i].h - scrollY){
 						buttonArray[i].verifying = true; 
 				}
 			
 			}
 	}
 
+    if (canvasX < 50){
+	   if (canvasY > 40 && canvasY < 360){placeY = canvasY;}
+	   if (canvasY < 40){placeY = 0;}
+	}
+	
+
 }//END OF CLICKFUNC
 var myVar = setInterval(move, 20);
 
 var scene = 1; 
 
-var points = 20; 
+var points = 50; 
+
+var scrollY = 0; 
+
+var curplaceY = 0;
+var placeY = 0; 
+
+var debugInfo = 1; 
+
+var maxScrollY = 400; 
+
+var realScrollY = 0;
 function move() {
 
 //backtrack.play();
@@ -139,7 +177,8 @@ function move() {
 ctx.fillStyle = "black";
 ctx.fillRect(0,0, 800, 400);
 
-ctx.drawImage(fert, 0, 0,800,400);
+ctx.drawImage(fert, 0, 0 - scrollY,800,400);
+ctx.drawImage(fert2, 0, 400 - scrollY,800,400);
 
 //Prototypes
 for(var i = 0; i < buttonArray.length ; i++) {
@@ -147,22 +186,64 @@ for(var i = 0; i < buttonArray.length ; i++) {
 }
 
 
-ctx.font = "20px Arial";
+//UI
+ctx.drawImage(scrollbar, 0, 0,800,400);
+ctx.drawImage(scrollbarGREEN, 10, curplaceY,39,40);
+
+if (curplaceY < placeY){curplaceY = curplaceY + 10;}
+if (curplaceY > placeY){curplaceY = curplaceY - 10;}
+
+realScrollY = (placeY * maxScrollY)/320
+
+if (realScrollY > 400){realScrollY = 400;}
+if (realScrollY < 400){realScrollY = 0;}
+
+if (scrollY < realScrollY){scrollY = scrollY + 10;}
+if (scrollY > realScrollY){scrollY = scrollY - 10;}
+
+if (scrollY < realScrollY){scrollY = scrollY + 1;}
+if (scrollY > realScrollY){scrollY = scrollY - 1;}
+
+ctx.fillStyle = "black";
+ctx.fillRect(295,0, 150, 30);
+
+ctx.font = "30px Arial";
 ctx.fillStyle = "white";
+ctx.fillText("Points: " + points,300,25);
+
+
+
+if (debugInfo == 1){
+ctx.font = "20px Arial";
+ctx.fillStyle = "black";
 ctx.fillText("X: " + canvasX,3,20);
 ctx.fillText("Y: " + canvasY,3,40);
 ctx.fillText("Points: " + points,3,60);
 ctx.fillText("Scene: " + scene,3,80);
-ctx.fillText("Choices: " + choicesArray,3,100);
+ctx.fillText("ScrollY: " + realScrollY,3,100);
+}
 
+document.getElementById("demo").value = choicesArray;
+
+choicesArray = [];
+for(var i = 0; i < buttonArray.length ; i++) {
+        if (buttonArray[i].breeded == true){choicesArray.push(buttonArray[i].name);}
+}
 
 }//End of FUNCTION
 
 
 </script>
 
+<input class = "defaultText" type="text" size="80" id="demo" value="">
+
 <img id="fert"  style="display:none; visibility:hidden;" src="fert.png" alt="">
+<img id="fert2"  style="display:none; visibility:hidden;" src="fert2.png" alt="">
+
 <img id="win"  style="display:none; visibility:hidden;" src="win.png" alt="">
 <img id="lose"  style="display:none; visibility:hidden;" src="lose.png" alt="">
+
+<img id="scrollbar"  style="display:none; visibility:hidden;" src="scrollbar.png" alt="">
+<img id="scrollbarGREEN"  style="display:none; visibility:hidden;" src="scrollbarGREEN.png" alt="">
 
 </html> 
