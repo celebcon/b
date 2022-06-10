@@ -1,0 +1,168 @@
+<html>
+
+<body style="background-color:lightblue;">
+
+<canvas id="myCanvas" onload = 'move()' onclick = "clickfunc()" width="800" height="400" style=" padding-left: 0;
+    padding-right: 0;
+	
+    margin-left: auto;
+    margin-right: auto;
+	margin-top: 0px;
+    display: block;border:3px solid white;">
+</canvas>
+
+</body>
+
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+ctx.font = "16px Arial";
+
+var canvasX = 0; 
+var canvasY = 0; 
+canvas.addEventListener("mousemove", function(e) { 
+    var cRect = canvas.getBoundingClientRect();              // Gets the CSS positions along with width/height
+    canvasX = Math.round(e.clientX - cRect.left);        // Subtract the 'left' of the canvas from the X/Y
+    canvasY = Math.round(e.clientY - cRect.top);         // positions to get make (0,0) the top left of the    
+});
+
+
+function sound(src) {
+ this.sound = document.createElement("audio");
+this.sound.src = src;
+this.sound.setAttribute("preload", "auto");
+this.sound.setAttribute("controls", "none");
+this.sound.style.display = "none";
+document.body.appendChild(this.sound);
+this.play = function(){
+this.sound.play();
+}
+this.stop = function(){
+this.sound.pause();
+}   
+}
+
+backtrack = new sound("sounds/backtrack.mp3");
+
+
+
+var button = function(x,y,endx,endy,cost,scenes,name,f) {
+    this.x = x;
+    this.y = y;
+    this.endx = endx;
+	this.endy = endy;
+    this.w = this.endx - this.x;
+    this.h = this.endy - this.y;
+	this.cost = cost;
+	this.bought = false; 
+	this.name = name; 
+	this.verifying = false; 
+	this.verified = false; 
+	this.scene = scenes;
+	this.f = f; 
+	this.rand = 0;
+	this.breeded = false; 
+};
+
+button.prototype.draw = function() {
+	ctx.strokeStyle = "red"; 
+	ctx.lineWidth = 5;
+    ctx.strokeRect(this.x, this.y, this.w, this.h);
+	
+	if (this.verifying == true){
+		this.verified = true;
+		if (points - this.cost < 0){this.verified = false;}
+		if (this.scene != scene){this.verified = false;}
+		if (this.bought == true){this.verified = false;}
+	}
+	
+	if (this.verified == true){
+	this.verifying = false; 
+	points = points - this.cost; 
+	this.bought = true;
+	choicesArray.push(this.name); 
+	this.verified = false; 
+	this.rand = Math.random();
+	if (this.rand < this.f){this.breeded = true;}
+	if (this.rand >= this.f){this.breeded = false;}
+	}
+	
+  if (this.bought == true){
+  
+      if (this.breeded == true){
+	  ctx.drawImage(win, this.x + 3, this.y - 287,223,285);
+	  }
+	  
+	  if (this.breeded == false){
+	  ctx.drawImage(lose, this.x + 3, this.y - 287,223,285);
+	  }
+  
+  }
+	
+};
+
+
+var buttonArray = []; 
+
+var choicesArray = []; 
+
+buttonArray.push(new button(70, 290,310,320,5,1, "Chloe Grace Moretz",0.90));
+
+buttonArray.push(new button(313, 290,550,320,4,1, "Christina Hendricks",0.60));
+
+buttonArray.push(new button(560, 290,800,320,3,1, "Emily Osment",0.85));
+
+
+function clickfunc(){
+
+	for(var i = 0; i < buttonArray.length ; i++) {
+			if (canvasX > buttonArray[i].x && canvasX < buttonArray[i].x + buttonArray[i].w){
+				if (canvasY > buttonArray[i].y && canvasY < buttonArray[i].y + buttonArray[i].h){
+						buttonArray[i].verifying = true; 
+				}
+			
+			}
+	}
+
+}//END OF CLICKFUNC
+var myVar = setInterval(move, 20);
+
+var scene = 1; 
+
+var points = 20; 
+function move() {
+
+//backtrack.play();
+
+//BG
+ctx.fillStyle = "black";
+ctx.fillRect(0,0, 800, 400);
+
+ctx.drawImage(fert, 0, 0,800,400);
+
+//Prototypes
+for(var i = 0; i < buttonArray.length ; i++) {
+        buttonArray[i].draw();
+}
+
+
+ctx.font = "20px Arial";
+ctx.fillStyle = "white";
+ctx.fillText("X: " + canvasX,3,20);
+ctx.fillText("Y: " + canvasY,3,40);
+ctx.fillText("Points: " + points,3,60);
+ctx.fillText("Scene: " + scene,3,80);
+ctx.fillText("Choices: " + choicesArray,3,100);
+
+
+}//End of FUNCTION
+
+
+</script>
+
+<img id="fert"  style="display:none; visibility:hidden;" src="fert.png" alt="">
+<img id="win"  style="display:none; visibility:hidden;" src="win.png" alt="">
+<img id="lose"  style="display:none; visibility:hidden;" src="lose.png" alt="">
+
+</html> 
