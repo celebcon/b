@@ -74,21 +74,22 @@ var button = function(x,y,endx,endy,cost,scenes,name,f) {
 	this.name = name; 
 	this.verifying = false; 
 	this.verified = false; 
-	this.scene = scenes;
+	this.scenes = scenes;
 	this.f = f; 
 	this.rand = 0;
 	this.breeded = false; 
+	this.maided = false;
 };
 
 button.prototype.draw = function() {
 	ctx.strokeStyle = "red"; 
 	ctx.lineWidth = 5;
-    //ctx.strokeRect(this.x, this.y - scrollY, this.w, this.h);
-	
+    if (this.scenes == scene){ctx.strokeRect(this.x, this.y - scrollY, this.w, this.h);}
+
 	if (this.verifying == true){
 		this.verified = true;
 		if (points - this.cost < 0){this.verified = false;}
-		if (this.scene != scene){this.verified = false;}
+		if (this.scenes != scene){this.verified = false;}
 		if (this.bought == true){this.verified = false;}
 	}
 	
@@ -96,7 +97,8 @@ button.prototype.draw = function() {
 	this.verifying = false; 
 	points = points - this.cost; 
 	this.bought = true;
-	choicesArray.push(this.name); 
+	if (scene == 1){choicesArray.push(this.name);}
+	if (scene == 4){this.maided = true;}
 	this.verified = false; 
 	this.rand = Math.random();
 	if (this.rand < this.f){this.breeded = true;}
@@ -121,6 +123,7 @@ button.prototype.draw = function() {
 var buttonArray = []; 
 
 var choicesArray = []; 
+
 
 buttonArray.push(new button(70, 290,310,320,5,1, "Chloe Grace Moretz",0.90));
 
@@ -204,11 +207,26 @@ buttonArray.push(new button(313, 3890,550,3920,3,1, "Amy Adams",0.55));
 buttonArray.push(new button(560, 3890,800,3920,4,1, "Olivia Wilde",0.75));
 
 
+//.......................
+
+buttonArray.push(new button(50, 370,270,400,2,4, "Jenna Coleman",0.70));
+
+buttonArray.push(new button(280, 370,510,400,4,4, "Kate Upton",0.70));
+
+buttonArray.push(new button(520, 370,750,400,6,4, "Scarlett Johansson",0.70));
+
 function clickfunc(){
+
+
+if (scene == 3){
+	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 20; scrollX = 0; scrollY = 0;}
+}
 
 if (scene == 2){
 	if (canvasX > 240 && canvasX < 560 && canvasY > 240 && canvasY < 300){scene = 3;}
 }
+
+
 
 	for(var i = 0; i < buttonArray.length ; i++) {
 			if (canvasX > buttonArray[i].x && canvasX < buttonArray[i].x + buttonArray[i].w){
@@ -249,16 +267,19 @@ if (scene == -10){
 }//END OF CLICKFUNC
 var myVar = setInterval(move, 20);
 
-var scene = -10; 
+//var scene = -10; 
+var scene = 1;
 
-var points = 30; 
+var points = 10; 
 
 var scrollY = 0; 
+
+var scrollX = 0;
 
 var curplaceY = 0;
 var placeY = 0; 
 
-var debugInfo = 0; 
+var debugInfo = 1; 
 
 var maxScrollY = 3200; 
 
@@ -285,6 +306,18 @@ ctx.drawImage(bruh, 0,1200 - scrollY,800,400);
 if (scene == 1 && points < 2){scene = 2;}
 if (scene == 2){ctx.drawImage(outofpoint, 0, 0,800,400);}
 if (scene == 3){ctx.drawImage(maids,0, 0,800,400);}
+
+
+if (scene == 4){
+ctx.drawImage(maidSelect,0 - scrollX, 0,800,400);
+ctx.fillStyle = "black";
+ctx.drawImage(transblack,290, 0,150,30);
+
+ctx.font = "30px Arial";
+ctx.fillStyle = "white";
+ctx.fillText("Points: " + points,300,25);
+
+}
 
 if (scene == 1){
 ctx.drawImage(fert, 0, 0 - scrollY,800,400);
@@ -333,7 +366,7 @@ if (scrollY < realScrollY){scrollY = scrollY + 1;}
 if (scrollY > realScrollY){scrollY = scrollY - 1;}
 
 ctx.fillStyle = "black";
-ctx.fillRect(295,0, 150, 30);
+ctx.drawImage(transblack,295, 0,150,30);
 
 ctx.font = "30px Arial";
 ctx.fillStyle = "white";
@@ -356,7 +389,11 @@ document.getElementById("demo").value = choicesArray;
 
 choicesArray = [];
 for(var i = 0; i < buttonArray.length ; i++) {
-        if (buttonArray[i].breeded == true){choicesArray.push(buttonArray[i].name);}
+        if (buttonArray[i].breeded == true && scene == 1){choicesArray.push(buttonArray[i].name);}
+}
+
+for(var i = 0; i < buttonArray.length ; i++) {
+        if (buttonArray[i].maided == true && scene == 4){choicesArray.push(buttonArray[i].name);}
 }
 
 }//End of FUNCTION
@@ -387,6 +424,8 @@ for(var i = 0; i < buttonArray.length ; i++) {
 <img id="fert9"  style="display:none; visibility:hidden;" src="fert9.png" alt="">
 <img id="fert10" style="display:none; visibility:hidden;" src="fert10.png" alt="">
 
+<img id="maidSelect" style="display:none; visibility:hidden;" src="maidSelect.png" alt="">
+
 <img id="outofpoint" style="display:none; visibility:hidden;" src="outofpoint.png" alt="">
 
 <img id="win"  style="display:none; visibility:hidden;" src="win.png" alt="">
@@ -394,5 +433,7 @@ for(var i = 0; i < buttonArray.length ; i++) {
 
 <img id="scrollbar"  style="display:none; visibility:hidden;" src="scrollbar.png" alt="">
 <img id="scrollbarGREEN"  style="display:none; visibility:hidden;" src="scrollbarGREEN.png" alt="">
+
+<img id="transblack"  style="display:none; visibility:hidden;" src="transblack.png" alt="">
 
 </html> 
