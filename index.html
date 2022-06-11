@@ -58,7 +58,7 @@ this.sound.pause();
 }   
 }
 
-backtrack = new sound("sounds/backtrack.mp3");
+//backtrack = new sound("sounds/backtrack.mp3");
 
 
 
@@ -206,6 +206,10 @@ buttonArray.push(new button(560, 3890,800,3920,4,1, "Olivia Wilde",0.75));
 
 function clickfunc(){
 
+if (scene == 2){
+	if (canvasX > 240 && canvasX < 560 && canvasY > 240 && canvasY < 300){scene = 3;}
+}
+
 	for(var i = 0; i < buttonArray.length ; i++) {
 			if (canvasX > buttonArray[i].x && canvasX < buttonArray[i].x + buttonArray[i].w){
 				if (canvasY > buttonArray[i].y - scrollY && canvasY < buttonArray[i].y + buttonArray[i].h - scrollY){
@@ -238,6 +242,8 @@ if (scene == -9){
 if (scene == -10){
 	if (canvasY > 320 && canvasX > 220 && canvasX < 600){scene = -9;}
 }
+
+
 }
 
 }//END OF CLICKFUNC
@@ -245,14 +251,14 @@ var myVar = setInterval(move, 20);
 
 var scene = -10; 
 
-var points = 20; 
+var points = 30; 
 
 var scrollY = 0; 
 
 var curplaceY = 0;
 var placeY = 0; 
 
-var debugInfo = 1; 
+var debugInfo = 0; 
 
 var maxScrollY = 3200; 
 
@@ -277,7 +283,8 @@ ctx.drawImage(request, 0, 800 - scrollY,800,400);
 ctx.drawImage(bruh, 0,1200 - scrollY,800,400);
 
 if (scene == 1 && points < 2){scene = 2;}
-if (scene == 2){ctx.drawImage(maids, 0, 0,800,400);}
+if (scene == 2){ctx.drawImage(outofpoint, 0, 0,800,400);}
+if (scene == 3){ctx.drawImage(maids,0, 0,800,400);}
 
 if (scene == 1){
 ctx.drawImage(fert, 0, 0 - scrollY,800,400);
@@ -380,6 +387,7 @@ for(var i = 0; i < buttonArray.length ; i++) {
 <img id="fert9"  style="display:none; visibility:hidden;" src="fert9.png" alt="">
 <img id="fert10" style="display:none; visibility:hidden;" src="fert10.png" alt="">
 
+<img id="outofpoint" style="display:none; visibility:hidden;" src="outofpoint.png" alt="">
 
 <img id="win"  style="display:none; visibility:hidden;" src="win.png" alt="">
 <img id="lose"  style="display:none; visibility:hidden;" src="lose.png" alt="">
