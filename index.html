@@ -17,7 +17,7 @@
 </style>
 <body style="background-color:lightblue;">
 
-<canvas id="myCanvas" onload = 'move()' onclick = "clickfunc()" width="800" height="400" style=" padding-left: 0;
+<canvas id="myCanvas" onclick = "clickfunc()" width="800" height="400" style=" padding-left: 0;
     padding-right: 0;
 	
     margin-left: auto;
@@ -222,8 +222,9 @@ function clickfunc(){
 	}
 	
 
+if (scrollY == 0 || scrollY == 400 || scrollY == 800 || scrollY == 1200){
 if (scene == -7){
-	if (canvasY > 200 && canvasX > 220 && canvasX < 600){scene = 1;}
+	if (canvasY > 200 && canvasX > 220 && canvasX < 600){scene = 1; scrollY = 0;}
 }
 
 if (scene == -8){
@@ -236,6 +237,7 @@ if (scene == -9){
 
 if (scene == -10){
 	if (canvasY > 320 && canvasX > 220 && canvasX < 600){scene = -9;}
+}
 }
 
 }//END OF CLICKFUNC
@@ -265,10 +267,15 @@ ctx.fillStyle = "black";
 ctx.fillRect(0,0, 800, 400);
 
 
-if (scene == -10){ctx.drawImage(intro, 0, 0,800,400);}
-if (scene == -9){ctx.drawImage(greatnews, 0, 0,800,400);}
-if (scene == -8){ctx.drawImage(request, 0, 0,800,400);}
-if (scene == -7){ctx.drawImage(fertility, 0, 0,800,400);}
+if (scene == -9 && scrollY < 400){scrollY = scrollY + 10;}
+if (scene == -8 && scrollY < 800){scrollY = scrollY + 10;}
+if (scene == -7 && scrollY < 1200){scrollY = scrollY + 10;}
+
+ctx.drawImage(intro, 0, 0 - scrollY,800,400);
+ctx.drawImage(greatnews,0,400 - scrollY,800,400);
+ctx.drawImage(request, 0, 800 - scrollY,800,400);
+ctx.drawImage(fertility, 0,1200 - scrollY,800,400);
+
 if (scene == 1 && points < 2){scene = 2;}
 if (scene == 2){ctx.drawImage(maids, 0, 0,800,400);}
 
@@ -335,7 +342,7 @@ ctx.fillText("X: " + canvasX,3,20);
 ctx.fillText("Y: " + canvasY,3,40);
 ctx.fillText("Points: " + points,3,60);
 ctx.fillText("Scene: " + scene,3,80);
-ctx.fillText("ScrollY: " + realScrollY,3,100);
+ctx.fillText("ScrollY: " + scrollY,3,100);
 }
 
 document.getElementById("demo").value = choicesArray;
@@ -371,7 +378,7 @@ for(var i = 0; i < buttonArray.length ; i++) {
 <img id="fert7"  style="display:none; visibility:hidden;" src="fert7.png" alt="">
 <img id="fert8"  style="display:none; visibility:hidden;" src="fert8.png" alt="">
 <img id="fert9"  style="display:none; visibility:hidden;" src="fert9.png" alt="">
-<img id="fert10"  style="display:none; visibility:hidden;" src="fert10.png" alt="">
+<img id="fert10" onload = 'move()'  style="display:none; visibility:hidden;" src="fert10.png" alt="">
 
 
 <img id="win"  style="display:none; visibility:hidden;" src="win.png" alt="">
@@ -381,5 +388,3 @@ for(var i = 0; i < buttonArray.length ; i++) {
 <img id="scrollbarGREEN"  style="display:none; visibility:hidden;" src="scrollbarGREEN.png" alt="">
 
 </html> 
-
-
