@@ -94,6 +94,10 @@ button.prototype.draw = function() {
 		if (points - this.cost < 0){this.verified = false;}
 		if (this.scenes != scene){this.verified = false;}
 		if (this.bought == true){this.verified = false;}
+		
+		for(var i = 0; i < maidsArray.length ; i++) {
+         if (this.name == maidsArray[i]){this.verified = false;}
+        }
 	}
 	
 	if (this.verified == true){
@@ -101,7 +105,7 @@ button.prototype.draw = function() {
 	points = points - this.cost; 
 	this.bought = true;
 	if (scene == 1){wivesArray.push(this.name);}
-	if (scene == 4){outputString += this.name + "\n";}
+	if (scene == 4){outputString += this.name + "\n"; maidsArray.push(this.name);}
 	if (scene == 4){this.maided = true;}
 	this.verified = false; 
 	this.rand = Math.random();
@@ -128,6 +132,7 @@ var buttonArray = [];
 
 var choicesArray = []; 
 
+var maidsArray = [];
 
 buttonArray.push(new button(70, 290,310,320,5,1, "Chloe Grace Moretz",0.90));
 
@@ -213,14 +218,34 @@ buttonArray.push(new button(560, 3890,800,3920,4,1, "Olivia Wilde",0.75));
 
 //.......................
 
+
+function clickfunc(){
+
+if (scrollX == 0 && scene == 4){
+buttonArray = [];
 buttonArray.push(new button(50, 370,270,400,2,4, "Jenna Coleman",0.70));
 
 buttonArray.push(new button(280, 370,510,400,4,4, "Kate Upton",0.70));
 
 buttonArray.push(new button(520, 370,750,400,6,4, "Scarlett Johansson",0.70));
+}
 
-function clickfunc(){
+if (scrollX == -800 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,1,4, "Karen Fukahara",0.70));
 
+buttonArray.push(new button(280, 370,510,400,4,4, "Emma Watson",0.70));
+
+buttonArray.push(new button(520, 370,750,400,5,4, "Maisie Williams",0.70));
+}
+
+if (scene == 4 && canvasX < 50){
+	scrollX = -800; 
+} 
+
+if (scene == 4 && canvasX > 760){
+	scrollX = 0; 
+} 
 
 if (scene == 3){
 	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 20; scrollX = 0; scrollY = 0; outputString+= "Maids: \n";}
@@ -272,7 +297,7 @@ if (scene == -10){
 var myVar = setInterval(move, 20);
 
 //var scene = -10; 
-var scene = 1;
+var scene = 4;
 
 var points = 20; 
 
@@ -326,6 +351,7 @@ if (scene == 3){ctx.drawImage(maids,0, 0,800,400);}
 
 if (scene == 4){
 ctx.drawImage(maidSelect,0 - scrollX, 0,800,400);
+ctx.drawImage(maidSelectB1,-800 - scrollX, 0,800,400);
 ctx.fillStyle = "black";
 ctx.drawImage(transblack,290, 0,150,30);
 
@@ -398,7 +424,7 @@ ctx.fillText("X: " + canvasX,3,20);
 ctx.fillText("Y: " + canvasY,3,40);
 ctx.fillText("Points: " + points,3,60);
 ctx.fillText("Scene: " + scene,3,80);
-ctx.fillText("ScrollY: " + scrollY,3,100);
+ctx.fillText("ScrollX: " + scrollX,3,100);
 }
 
 
@@ -436,6 +462,7 @@ document.getElementById("demo").innerHTML = outputString;
 <img id="fert10" style="display:none; visibility:hidden;" src="fert10.png" alt="">
 
 <img id="maidSelect" style="display:none; visibility:hidden;" src="maidSelect.png" alt="">
+<img id="maidSelectB1" style="display:none; visibility:hidden;" src="maidSelectB1.png" alt="">
 
 <img id="outofpoint" style="display:none; visibility:hidden;" src="outofpoint.png" alt="">
 
