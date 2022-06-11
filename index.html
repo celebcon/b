@@ -14,6 +14,9 @@
 	      white-space: pre-wrap;
 }
 
+p.a {
+  white-space: pre;
+}
 </style>
 <body style="background-color:lightblue;">
 
@@ -97,7 +100,7 @@ button.prototype.draw = function() {
 	this.verifying = false; 
 	points = points - this.cost; 
 	this.bought = true;
-	if (scene == 1){choicesArray.push(this.name);}
+	if (scene == 1){wivesArray.push(this.name);}
 	if (scene == 4){this.maided = true;}
 	this.verified = false; 
 	this.rand = Math.random();
@@ -112,7 +115,7 @@ button.prototype.draw = function() {
 	  }
 	  
 	  if (this.breeded == false){
-	  if (scene == 1){ctx.drawImage(lose, this.x + 3, this.y - 287 - scrollY,223,285);}
+	  if (scene == 1){ctx.drawImage(lose, this.x + 3, this.y - 287 - scrollY,223,285); wivesArray = wivesArray.filter(e => e !== this.name);}
 	  }
   
   }
@@ -268,7 +271,7 @@ if (scene == -10){
 var myVar = setInterval(move, 20);
 
 //var scene = -10; 
-var scene = -10;
+var scene = -7;
 
 var points = 20; 
 
@@ -284,6 +287,10 @@ var debugInfo = 1;
 var maxScrollY = 3200; 
 
 var realScrollY = 0;
+
+var wivesArray = []; 
+
+var outputString = "Wives: " + "\n";
 
 function move() {
 
@@ -303,7 +310,15 @@ ctx.drawImage(greatnews,0,400 - scrollY,800,400);
 ctx.drawImage(request, 0, 800 - scrollY,800,400);
 ctx.drawImage(bruh, 0,1200 - scrollY,800,400);
 
-if (scene == 1 && points < 2){scene = 2;}
+if (scene == 1 && points < 2){
+scene = 2;
+
+for(var i = 0; i < wivesArray.length ; i++) {
+outputString += wivesArray[i] + "\n"; 
+}
+
+}
+
 if (scene == 2){ctx.drawImage(outofpoint, 0, 0,800,400);}
 if (scene == 3){ctx.drawImage(maids,0, 0,800,400);}
 
@@ -385,23 +400,18 @@ ctx.fillText("Scene: " + scene,3,80);
 ctx.fillText("ScrollY: " + scrollY,3,100);
 }
 
-document.getElementById("demo").value = choicesArray;
 
-choicesArray = [];
-for(var i = 0; i < buttonArray.length ; i++) {
-        if (buttonArray[i].breeded == true && scene == 1){choicesArray.push(buttonArray[i].name);}
-}
+document.getElementById("demo").innerHTML = outputString; 
 
-for(var i = 0; i < buttonArray.length ; i++) {
-        if (buttonArray[i].maided == true && scene == 4){choicesArray.push(buttonArray[i].name);}
-}
+
 
 }//End of FUNCTION
 
 
 </script>
 
-<input class = "defaultText" type="text" size="80" id="demo" value="">
+<p class="a" id = "demo" value = ""></p>
+
 
 <img id="intro"  style="display:none; visibility:hidden;" src="intro.png" alt="">
 
