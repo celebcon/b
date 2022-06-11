@@ -101,6 +101,7 @@ button.prototype.draw = function() {
 	points = points - this.cost; 
 	this.bought = true;
 	if (scene == 1){wivesArray.push(this.name);}
+	if (scene == 4){outputString += this.name + "\n";}
 	if (scene == 4){this.maided = true;}
 	this.verified = false; 
 	this.rand = Math.random();
@@ -222,7 +223,7 @@ function clickfunc(){
 
 
 if (scene == 3){
-	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 20; scrollX = 0; scrollY = 0;}
+	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 20; scrollX = 0; scrollY = 0; outputString+= "Maids: \n";}
 }
 
 if (scene == 2){
@@ -271,7 +272,7 @@ if (scene == -10){
 var myVar = setInterval(move, 20);
 
 //var scene = -10; 
-var scene = -10;
+var scene = 1;
 
 var points = 20; 
 
