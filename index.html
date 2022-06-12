@@ -16,9 +16,10 @@
 
 p.a {
   white-space: pre;
+  color: white;
 }
 </style>
-<body style="background-color:lightblue;">
+<body style="background-color:black;">
 
 <canvas id="myCanvas" onclick = "clickfunc()" width="800" height="400" style=" padding-left: 0;
     padding-right: 0;
@@ -82,6 +83,7 @@ var button = function(x,y,endx,endy,cost,scenes,name,f) {
 	this.rand = 0;
 	this.breeded = false; 
 	this.maided = false;
+	this.image = false;
 };
 
 button.prototype.draw = function() {
@@ -114,7 +116,8 @@ button.prototype.draw = function() {
 	}
 	
   if (this.bought == true){
-  
+      if (scene == 4){ctx.drawImage(maidwin, this.x + 15, this.y - 400,210,285);}
+	  
       if (this.breeded == true){
 	  if (scene == 1){ctx.drawImage(win, this.x + 3, this.y - 287 - scrollY,223,285);}
 	  }
@@ -133,6 +136,7 @@ var buttonArray = [];
 var choicesArray = []; 
 
 var maidsArray = [];
+
 
 buttonArray.push(new button(70, 290,310,320,5,1, "Chloe Grace Moretz",0.90));
 
@@ -239,16 +243,104 @@ buttonArray.push(new button(280, 370,510,400,4,4, "Emma Watson",0.70));
 buttonArray.push(new button(520, 370,750,400,5,4, "Maisie Williams",0.70));
 }
 
+if (scrollX == -1600 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,1,4, "Milana Vayntrub",0.70));
+
+buttonArray.push(new button(280, 370,510,400,2,4, "Olivia Rodrigo",0.70));
+
+buttonArray.push(new button(520, 370,750,400,3,4, "Alicia Schmidt",0.70));
+}
+
+if (scrollX == 800 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,1,4, "Karen Gillian",0.70));
+
+buttonArray.push(new button(280, 370,510,400,3,4, "Yvvone Strahvoski",0.70));
+
+buttonArray.push(new button(520, 370,750,400,5,4, "Madison Beer",0.70));
+}
+
+if (scrollX == 1600 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,2,4, "Gal Gadot",0.70));
+
+buttonArray.push(new button(280, 370,510,400,3,4, "Vanessa Hudgens",0.70));
+
+buttonArray.push(new button(520, 370,750,400,3,4, "Jessica Nigri",0.70));
+}
+
+
+
+if (scrollX == 2400 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,1,4, "Halston Sage",0.70));
+
+buttonArray.push(new button(280, 370,510,400,3,4, "Lea Seydoux",0.70));
+
+buttonArray.push(new button(520, 370,750,400,3,4, "Rita Ora",0.70));
+}
+
+if (scrollX == 3200 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,1,4, "Victoria Justice",0.70));
+
+buttonArray.push(new button(280, 370,510,400,3,4, "Salma Hayek",0.70));
+
+buttonArray.push(new button(520, 370,750,400,3,4, "Zoe Saldana",0.70));
+}
+
+
+if (scrollX == 4000 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,1,4, "Mary Elizabeth Winstead",0.70));
+
+buttonArray.push(new button(280, 370,510,400,3,4, "Nina Dobrev",0.70));
+
+buttonArray.push(new button(520, 370,750,400,4,4, "Katie McGrath",0.70));
+}
+
+
+
+if (scrollX == -2400 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,2,4, "Taylor Swift",0.70));
+
+buttonArray.push(new button(280, 370,510,400,3,4, "Adria Arjona",0.70));
+
+buttonArray.push(new button(520, 370,750,400,5,4, "Saoirse Ronan",0.70));
+}
+
+if (scrollX == -3200 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,1,4, "Olivia Culpo",0.70));
+
+buttonArray.push(new button(280, 370,510,400,2,4, "Jamie Chung",0.70));
+
+buttonArray.push(new button(520, 370,750,400,3,4, "Becky G",0.70));
+}
+
+if (scrollX == -4000 && scene == 4){
+buttonArray = [];
+buttonArray.push(new button(50, 370,270,400,2,4, "Margot Robbie",0.70));
+
+buttonArray.push(new button(280, 370,510,400,3,4, "Elizabeth Hurley",0.70));
+
+buttonArray.push(new button(520, 370,750,400,6,4, "Ariana Grande",0.70));
+}
+
 if (scene == 4 && canvasX < 50){
-	scrollX = -800; 
+	scrollX += -800; 
+    if (scrollX < -4000){scrollX = -4000;}
 } 
 
 if (scene == 4 && canvasX > 760){
-	scrollX = 0; 
+	scrollX += 800; 
+	if (scrollX > 4000){scrollX = 4000;}
 } 
 
 if (scene == 3){
-	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 20; scrollX = 0; scrollY = 0; outputString+= "Maids: \n";}
+	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 100; scrollX = 0; scrollY = 0; outputString+= "Maids: \n";}
 }
 
 if (scene == 2){
@@ -299,7 +391,7 @@ var myVar = setInterval(move, 20);
 //var scene = -10; 
 var scene = 4;
 
-var points = 20; 
+var points = 30; 
 
 var scrollY = 0; 
 
@@ -352,6 +444,18 @@ if (scene == 3){ctx.drawImage(maids,0, 0,800,400);}
 if (scene == 4){
 ctx.drawImage(maidSelect,0 - scrollX, 0,800,400);
 ctx.drawImage(maidSelectB1,-800 - scrollX, 0,800,400);
+ctx.drawImage(maidSelectB2,-1600 - scrollX, 0,800,400);
+ctx.drawImage(maidSelectB3,-2400 - scrollX, 0,800,400);
+ctx.drawImage(maidSelectB4,-3200 - scrollX, 0,800,400);
+ctx.drawImage(maidSelectB5,-4000 - scrollX, 0,800,400);
+
+
+ctx.drawImage(maidSelectA1,800 - scrollX, 0,800,400);
+ctx.drawImage(maidSelectA2,1600 - scrollX, 0,800,400);
+ctx.drawImage(maidSelectA3,2400 - scrollX, 0,800,400);
+ctx.drawImage(maidSelectA4,3200 - scrollX, 0,800,400);
+ctx.drawImage(maidSelectA5,4000 - scrollX, 0,800,400);
+
 ctx.fillStyle = "black";
 ctx.drawImage(transblack,290, 0,150,30);
 
@@ -463,6 +567,16 @@ document.getElementById("demo").innerHTML = outputString;
 
 <img id="maidSelect" style="display:none; visibility:hidden;" src="maidSelect.png" alt="">
 <img id="maidSelectB1" style="display:none; visibility:hidden;" src="maidSelectB1.png" alt="">
+<img id="maidSelectB2" style="display:none; visibility:hidden;" src="maidSelectB2.png" alt="">
+<img id="maidSelectB3" style="display:none; visibility:hidden;" src="maidSelectB3.png" alt="">
+<img id="maidSelectB4" style="display:none; visibility:hidden;" src="maidSelectB4.png" alt="">
+<img id="maidSelectB5" style="display:none; visibility:hidden;" src="maidSelectB5.png" alt="">
+
+<img id="maidSelectA1" style="display:none; visibility:hidden;" src="maidSelectA1.png" alt="">
+<img id="maidSelectA2" style="display:none; visibility:hidden;" src="maidSelectA2.png" alt="">
+<img id="maidSelectA3" style="display:none; visibility:hidden;" src="maidSelectA3.png" alt="">
+<img id="maidSelectA4" style="display:none; visibility:hidden;" src="maidSelectA4.png" alt="">
+<img id="maidSelectA5" style="display:none; visibility:hidden;" src="maidSelectA5.png" alt="">
 
 <img id="outofpoint" style="display:none; visibility:hidden;" src="outofpoint.png" alt="">
 
@@ -471,6 +585,8 @@ document.getElementById("demo").innerHTML = outputString;
 
 <img id="scrollbar"  style="display:none; visibility:hidden;" src="scrollbar.png" alt="">
 <img id="scrollbarGREEN"  style="display:none; visibility:hidden;" src="scrollbarGREEN.png" alt="">
+
+<img id="maidwin"  style="display:none; visibility:hidden;" src="maidwin.png" alt="">
 
 <img id="transblack"  style="display:none; visibility:hidden;" src="transblack.png" alt="">
 
