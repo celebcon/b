@@ -108,7 +108,7 @@ button.prototype.draw = function() {
 	points = points - this.cost; 
 	this.bought = true;
 	if (scene == 1){wivesArray.push(this.name);}
-	if (scene == 4){outputString += this.name + "\n"; maidsArray.push(this.name);}
+	if (scene == 4){outputString += this.name + "\n\n"; maidsArray.push(this.name);}
 	if (scene == 4){this.maided = true;}
 	this.verified = false; 
 	this.rand = Math.random();
@@ -117,7 +117,7 @@ button.prototype.draw = function() {
 	}
 	
   if (this.bought == true){
-      if (scene == 4){ctx.drawImage(maidwin, this.x + 15, this.y - 400 + this.transy,210,285); this.transy -=10;}
+      if (scene == 4){ctx.drawImage(maidwin, this.x + 15, this.y - 400 + this.transy,210,285); ctx.drawImage(fert, -600, -2000,1,1); this.transy -=10;}
 	  
       if (this.breeded == true){
 	  if (scene == 1){ctx.drawImage(win, this.x + 3, this.y - 287 - scrollY,223,285);}
@@ -346,7 +346,7 @@ if (scene == 4 && canvasX > 760){
 } 
 
 if (scene == 3){
-	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 20; scrollX = 0; scrollY = 0; outputString+= "\nMaids: \n";}
+	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 20; scrollX = 0; scrollY = 0; outputString+= "\nMaids: \n\n";}
 }
 
 if (scene == 2){
@@ -414,7 +414,7 @@ var realScrollY = 0;
 
 var wivesArray = []; 
 
-var outputString = "Wives: " + "\n";
+var outputString = "Wives: " + "\n\n";
 
 function move() {
 
@@ -438,7 +438,7 @@ if (scene == 1 && points < 2){
 scene = 2;
 
 for(var i = 0; i < wivesArray.length ; i++) {
-outputString += wivesArray[i] + "\n"; 
+outputString += wivesArray[i] + "\n\n"; 
 }
 
 }
