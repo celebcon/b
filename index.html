@@ -84,16 +84,17 @@ var button = function(x,y,endx,endy,cost,scenes,name,f) {
 	this.breeded = false; 
 	this.maided = false;
 	this.image = false;
+	this.transy = 0;
 };
 
 button.prototype.draw = function() {
 	ctx.strokeStyle = "red"; 
 	ctx.lineWidth = 5;
-    if (this.scenes == scene){ctx.strokeRect(this.x, this.y - scrollY, this.w, this.h);}
+    //if (this.scenes == scene){ctx.strokeRect(this.x, this.y - scrollY, this.w, this.h);}
 
 	if (this.verifying == true){
 		this.verified = true;
-		if (points - this.cost < 0){this.verified = false;}
+		if (points - this.cost < 0){this.verified = false; if (scene == 1 || scene == 4){ctx.drawImage(pointOut, 0, 0,800,400);}}
 		if (this.scenes != scene){this.verified = false;}
 		if (this.bought == true){this.verified = false;}
 		
@@ -116,7 +117,7 @@ button.prototype.draw = function() {
 	}
 	
   if (this.bought == true){
-      if (scene == 4){ctx.drawImage(maidwin, this.x + 15, this.y - 400,210,285);}
+      if (scene == 4){ctx.drawImage(maidwin, this.x + 15, this.y - 400 + this.transy,210,285); this.transy -=10;}
 	  
       if (this.breeded == true){
 	  if (scene == 1){ctx.drawImage(win, this.x + 3, this.y - 287 - scrollY,223,285);}
@@ -329,6 +330,11 @@ buttonArray.push(new button(280, 370,510,400,3,4, "Elizabeth Hurley",0.70));
 buttonArray.push(new button(520, 370,750,400,6,4, "Ariana Grande",0.70));
 }
 
+
+if (scene == 5){
+	if (canvasX > 190 && canvasX < 600 && canvasY > 250 && canvasY < 330){scene = 6; copyToClipboard(outputString);}
+}
+
 if (scene == 4 && canvasX < 50){
 	scrollX += -800; 
     if (scrollX < -4000){scrollX = -4000;}
@@ -340,7 +346,7 @@ if (scene == 4 && canvasX > 760){
 } 
 
 if (scene == 3){
-	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 100; scrollX = 0; scrollY = 0; outputString+= "Maids: \n";}
+	if (canvasX > 240 && canvasX < 700 && canvasY > 300 && canvasY < 400){scene = 4; points = points + 20; scrollX = 0; scrollY = 0; outputString+= "\nMaids: \n";}
 }
 
 if (scene == 2){
@@ -389,9 +395,9 @@ if (scene == -10){
 var myVar = setInterval(move, 20);
 
 //var scene = -10; 
-var scene = 4;
+var scene = -10;
 
-var points = 30; 
+var points = 25; 
 
 var scrollY = 0; 
 
@@ -400,7 +406,7 @@ var scrollX = 0;
 var curplaceY = 0;
 var placeY = 0; 
 
-var debugInfo = 1; 
+var debugInfo = 0; 
 
 var maxScrollY = 3200; 
 
@@ -438,7 +444,7 @@ outputString += wivesArray[i] + "\n";
 }
 
 if (scene == 2){ctx.drawImage(outofpoint, 0, 0,800,400);}
-if (scene == 3){ctx.drawImage(maids,0, 0,800,400);}
+if (scene == 3){ctx.drawImage(maids,0, 0,800,400); buttonArray = [];}
 
 
 if (scene == 4){
@@ -463,6 +469,16 @@ ctx.font = "30px Arial";
 ctx.fillStyle = "white";
 ctx.fillText("Points: " + points,300,25);
 
+if (points < 2){scene = 5;}
+
+}
+
+if (scene == 5){
+ctx.drawImage(maidOut,0, 0,800,400);
+}
+
+if (scene == 6){
+ctx.drawImage(end,0, 0,800,400);
 }
 
 if (scene == 1){
@@ -539,6 +555,16 @@ document.getElementById("demo").innerHTML = outputString;
 }//End of FUNCTION
 
 
+function copyToClipboard(text) {
+   const elem = document.createElement('textarea');
+   elem.value = text;
+   document.body.appendChild(elem);
+   elem.select();
+   document.execCommand('copy');
+   document.body.removeChild(elem);
+}
+
+
 </script>
 
 <p class="a" id = "demo" value = ""></p>
@@ -577,6 +603,7 @@ document.getElementById("demo").innerHTML = outputString;
 <img id="maidSelectA3" style="display:none; visibility:hidden;" src="maidSelectA3.png" alt="">
 <img id="maidSelectA4" style="display:none; visibility:hidden;" src="maidSelectA4.png" alt="">
 <img id="maidSelectA5" style="display:none; visibility:hidden;" src="maidSelectA5.png" alt="">
+<img id="maidOut" style="display:none; visibility:hidden;" src="maidOut.png" alt="">
 
 <img id="outofpoint" style="display:none; visibility:hidden;" src="outofpoint.png" alt="">
 
@@ -589,5 +616,8 @@ document.getElementById("demo").innerHTML = outputString;
 <img id="maidwin"  style="display:none; visibility:hidden;" src="maidwin.png" alt="">
 
 <img id="transblack"  style="display:none; visibility:hidden;" src="transblack.png" alt="">
+<img id="pointOut"  style="display:none; visibility:hidden;" src="pointOut.png" alt="">
+
+<img id="end"  style="display:none; visibility:hidden;" src="end.png" alt="">
 
 </html> 
